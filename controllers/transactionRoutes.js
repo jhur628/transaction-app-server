@@ -3,11 +3,47 @@ const { Transaction } = require('../models');
 
 router.get('/', async (req, res) => {
   try {
-    const transactionData = await Transaction.findAll()
-    
+    const transactionData = await Transaction.findAll();
+    res.status(200).json(transactionData);
   } catch (err) {
-    
+    res.status(400).json(err)
   }
-})
+});
+
+router.post('/', async (req, res) => {
+  try {
+    const transactionData = await Transaction.create({
+      ...req.body
+    });
+    res.status(200).json(transactionData);
+  } catch (err) {
+    res.status(400).json(err);
+  };
+});
+
+router.post('/contribution', async (req, res) => {
+  try {
+    const transactionData = await Transaction.create({
+      amount: req.body.amount,
+      type: "contribution"
+    });
+    res.status(200).json(transactionData);
+  } catch (err) {
+    res.status(400).json(err);
+  };
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const transactionData = await Transaction.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    res.status(200).json(transactionData);
+  } catch (err) {
+    res.status(400).json(err);
+  };
+});
 
 module.exports = router;
