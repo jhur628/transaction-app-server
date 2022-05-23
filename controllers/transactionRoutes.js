@@ -10,10 +10,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/contribution', async (req, res) => {
   try {
     const transactionData = await Transaction.create({
-      ...req.body
+      amount: req.body.amount,
+      type: "CONTRIBUTION"
     });
     res.status(200).json(transactionData);
   } catch (err) {
@@ -21,11 +22,23 @@ router.post('/', async (req, res) => {
   };
 });
 
-router.post('/contribution', async (req, res) => {
+router.post('/distribution', async (req, res) => {
   try {
     const transactionData = await Transaction.create({
       amount: req.body.amount,
-      type: "contribution"
+      type: "DISTRIBUTION"
+    });
+    res.status(200).json(transactionData);
+  } catch (err) {
+    res.status(400).json(err);
+  };
+});
+
+router.post('/bill-payment', async (req, res) => {
+  try {
+    const transactionData = await Transaction.create({
+      amount: req.body.amount,
+      type: "BILL PAYMENT"
     });
     res.status(200).json(transactionData);
   } catch (err) {
