@@ -4,8 +4,8 @@ const { Transaction } = require('../models');
 router.get('/', async (req, res) => {
   try {
     const transactionData = await Transaction.findAll();
-    const transactions = transactionData.map(transaction => transaction.get({ plain: true }));
-    res.status(200).json(transactions);
+    // const transactions = transactionData.map(transaction => transaction.get({ plain: true }));
+    res.status(200).json(transactionData);
   } catch (err) {
     res.status(400).json(err)
   }
